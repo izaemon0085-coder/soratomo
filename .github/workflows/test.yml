@@ -1,5 +1,6 @@
-# GitHub に送るたびに、テストを自動で動かす（段階1）
-# 外部パッケージなし。Node の 20・22・24 で確かめる
+# 送るたびに、エージェントが手伝うチェック（段階1）
+# 🦉 フクロウ：合言葉の書きこみを見る（1-2）／🐱 ヤマネコ：テスト（1-1）／🐕 シバ：落ちたら案内（1-4）
+# エージェントは「見る・知らせる」まで。マージを決めるのは人。止め方は .github/agents/README.md
 name: テスト
 
 on:
@@ -10,9 +11,24 @@ permissions:
   contents: read
 
 jobs:
+  owl:
+    name: フクロウの安全チェック
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node .github/agents/owl-check.mjs
+
   test:
+    name: test (${{ matrix.node }})
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       fail-fast: false
       matrix:
@@ -22,4 +38,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm test
+      - name: テスト
+        shell: bash
+        run: npm test 2>&1 | tee test-output.txt
+      - name: シバの案内
+        if: failure() && github.event_name == 'pull_request' && matrix.node == 22
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: node .github/agents/shiba-guide.mjs test-output.txt
