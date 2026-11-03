@@ -1,0 +1,27 @@
+# 🐰 ウサギの変更まとめ（工程 1-5）
+# 人が版（v0.1.0 など）のタグを付けて送ったときだけ動く。前の版からの変更をまとめて、リリースを作る
+name: ウサギの変更まとめ
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  notes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node .github/agents/usagi-notes.mjs "$GITHUB_REF_NAME" > notes.md
+      - name: リリースを作る
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag
