@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>そらとも β版</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <span class="brand">🛰️ そらとも <span class="beta">β版</span></span>
+    <span class="motto">小さな人工衛星を、地上から運用しよう</span>
+    <a class="back" id="back" href="#">← ともはねにもどる</a>
+  </header>
+
+  <main class="page">
+    <!-- はじめの画面 -->
+    <section class="card start" id="start">
+      <h1>きみは、人工衛星の管制官</h1>
+      <p>酒田の地上局から、小さな人工衛星（キューブサット）を動かします。ミッションは3つ：</p>
+      <ol class="mission-intro">
+        <li>🏔️ <strong>鳥海山の写真を撮る</strong>（カメラをつけて、鳥海山の上を通るとき。日なたで）</li>
+        <li>📡 <strong>写真を酒田の地上局へ送る</strong>（衛星が酒田の上を通る、短いあいだだけ）</li>
+        <li>☄️ <strong>デブリ（宇宙のごみ）をよける</strong>（エンジン噴射は2人の同意。1人ならフクロウが10秒で確かめる）</li>
+      </ol>
+      <p class="muted small">本物の衛星は約90分で地球を1周。ここでは2分で1周、3周までです。地球の影に入ると充電できません。電気は大切に。</p>
+      <p id="me-line" class="small"></p>
+      <div class="row">
+        <button type="button" class="btn big" id="go">🚀 ミッションスタート</button>
+      </div>
+      <form class="join" id="join-form">
+        <p class="small"><strong>友だちのミッションに協力する</strong>（管制官が出した4けたのコード）</p>
+        <div class="row">
+          <input name="code" inputmode="numeric" maxlength="4" pattern="\d{4}" required placeholder="コード" aria-label="協力コード">
+          <input name="name" type="text" maxlength="20" required placeholder="名前" aria-label="名前">
+          <button class="btn ghost" type="submit">協力する</button>
+        </div>
+      </form>
+      <p class="error" id="start-error" role="alert"></p>
+    </section>
+
+    <!-- 管制室 -->
+    <div id="room" hidden>
+      <section class="board">
+        <div class="card">
+          <canvas class="orbit" id="orbit" width="640" height="640" aria-label="地球と人工衛星の位置"></canvas>
+        </div>
+        <div class="side">
+          <div class="card status">
+            <div class="cell wide"><p class="muted small">電池</p><div class="bar"><span id="battery-bar"></span></div><p class="num" id="battery">－</p></div>
+            <div class="cell"><p class="muted small">いる場所</p><p class="num" id="sun">－</p></div>
+            <div class="cell"><p class="muted small">地上局</p><p class="num" id="pass">－</p></div>
+            <div class="cell"><p class="muted small">燃料</p><p class="num" id="fuel">－</p></div>
+            <div class="cell"><p class="muted small">時間</p><p class="num" id="time">－</p></div>
+          </div>
+          <div class="card">
+            <h2>ミッション</h2>
+            <ul class="missions" id="missions"></ul>
+            <p class="small" id="who-line"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card controls">
+        <button type="button" class="btn toggle" id="camera" aria-pressed="false">📷 カメラ</button>
+        <button type="button" class="btn toggle" id="save" aria-pressed="false">🔋 省電力</button>
+        <button type="button" class="btn" id="send">📡 写真を送る</button>
+        <button type="button" class="btn warn" id="burn">🔥 エンジン噴射（2人の同意）</button>
+        <button type="button" class="btn ghost" id="invite">🤝 協力コードを出す</button>
+        <span class="invite-code" id="invite-code" hidden></span>
+      </section>
+      <p class="error" id="error" role="alert"></p>
+
+      <section class="card" aria-live="polite">
+        <ul class="lines" id="lines"></ul>
+      </section>
+
+      <section class="card end" id="end" hidden>
+        <h2 id="end-title"></h2>
+        <p id="end-text"></p>
+        <button type="button" class="btn" id="again">もう一度</button>
+      </section>
+
+      <section class="card">
+        <h2>ブラックボックス（命令の記録） <span id="log-ok"></span></h2>
+        <ul class="log" id="log"></ul>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

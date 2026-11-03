@@ -1,0 +1,15 @@
+{
+  "name": "soratomo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "そらとも（β版）：小さな人工衛星の運用ゲーム。電池・通信できる時間・デブリ・命令の署名・2人の同意。ともはねのゲームとして",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test test/"
+  }
+}

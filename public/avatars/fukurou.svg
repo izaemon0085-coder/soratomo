@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="フクロウ">
+  <polygon points="20,34 24,8 42,24" fill="#7a6650"/>
+  <polygon points="80,34 76,8 58,24" fill="#7a6650"/>
+  <circle cx="50" cy="56" r="38" fill="#9a8166"/>
+  <ellipse cx="50" cy="72" rx="22" ry="18" fill="#d9c7ae"/>
+  <g fill="none" stroke="#b9a487" stroke-width="2" stroke-linecap="round">
+    <path d="M40 70 q3 4 6 0"/><path d="M54 70 q3 4 6 0"/><path d="M47 78 q3 4 6 0"/>
+  </g>
+  <circle cx="35" cy="48" r="13" fill="#f4ead8"/>
+  <circle cx="65" cy="48" r="13" fill="#f4ead8"/>
+  <circle cx="35" cy="48" r="7" fill="#f2b630"/>
+  <circle cx="65" cy="48" r="7" fill="#f2b630"/>
+  <circle cx="35" cy="48" r="4" fill="#1f2433"/>
+  <circle cx="65" cy="48" r="4" fill="#1f2433"/>
+  <circle cx="36.5" cy="46.5" r="1.3" fill="#fff"/>
+  <circle cx="66.5" cy="46.5" r="1.3" fill="#fff"/>
+  <polygon points="45,56 55,56 50,65" fill="#e08a2c"/>
+</svg>
